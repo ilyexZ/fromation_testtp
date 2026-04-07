@@ -20,18 +20,27 @@ spring:
     name: ms-gateway
   cloud:
     gateway:
-      mvc:                          # ← CHANGE THIS (was webflux)
-        routes:
-          - id: universite-route
-            predicates:
-              - Path=/cloud/universite/**
-            filters:
-              - RewritePath=/cloud/universite/(?<s>.*), /${s}
-            uri: lb://ms-universite
+      server:
+        webflux:
+          routes:
+            - id: universite-route
+              predicates:
+                - Path=/cloud/universite/**
+              filters:
+                - RewritePath=/cloud/universite/(?<s>.*), /${s}
+                - name: CircuitBreaker
+                  args:
+                    name: universite-cb
+                    fallbackUri: forward:/defaultUniversite
+              uri: lb://ms-universite
 
-          - id: formation-route
-            predicates:
-              - Path=/cloud/formation/**
-            filters:
-              - RewritePath=/cloud/formation/(?<s>.*), /${s}
-            uri: lb://ms-formation
+            - id: formation-route
+              predicates:
+                - Path=/cloud/formation/**
+              filters:
+                - RewritePath=/cloud/formation/(?<s>.*), /${s}
+                - name: CircuitBreaker
+                  args:
+                    name: formation-cb
+                    fallbackUri: forward:/defaultFormation
+              uri: lb://ms-formation

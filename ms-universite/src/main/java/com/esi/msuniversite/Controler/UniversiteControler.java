@@ -1,15 +1,17 @@
 package com.esi.msuniversite.Controler;
 
+import com.esi.msuniversite.DTO.EnseignantDTO;
 import com.esi.msuniversite.DTO.UniversiteDetailDTO;
 import com.esi.msuniversite.Entities.Universite;
+import com.esi.msuniversite.Feign.FormationFeignClient;
 import com.esi.msuniversite.Repository.UniversityRepository;
-import com.esi.msuniversite.Service.UniversiteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/uni")
@@ -17,16 +19,29 @@ import java.util.List;
 public class UniversiteControler {
 
     private final UniversityRepository universityRepository;
-    private final UniversiteService universiteService;
+    private final FormationFeignClient formationFeignClient;
 
     @GetMapping("/universites")
     public List<Universite> getUniversites() {
         return universityRepository.findAll();
     }
 
-    // New: with Recteur, Doyens, CircuitBreaker, and Caching
     @GetMapping("/details")
     public List<UniversiteDetailDTO> getUniversiteDetails() {
-        return universiteService.getAllUniversiteDetails();
+        return universityRepository.findAll().stream().map(u -> {
+            UniversiteDetailDTO dto = new UniversiteDetailDTO();
+            dto.setId(u.getId());
+            dto.setNom(u.getNom());
+            dto.setVille(u.getVille());
+
+            dto.setRecteur(formationFeignClient.getEnseignantById(u.getRecteurId()));
+
+            List<EnseignantDTO> doyens = u.getFacultes().stream()
+                    .map(f -> formationFeignClient.getEnseignantById(f.getDoyenId()))
+                    .collect(Collectors.toList());
+            dto.setDoyens(doyens);
+
+            return dto;
+        }).collect(Collectors.toList());
     }
 }

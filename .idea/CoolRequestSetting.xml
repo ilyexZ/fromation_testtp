@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CoolRequestSetting">
+    <option name="serializePaths">
+      <list>
+        <option value="C:\Users\ILYEX\.config\.cool-request\request\serialize\1f5b3357c7b440fa90e7436eed743c33" />
+        <option value="C:\Users\ILYEX\.config\.cool-request\request\serialize\a596d5f2767b4a1daf27a9fcd0a6e6e7" />
+        <option value="C:\Users\ILYEX\.config\.cool-request\request\serialize\9272ec28ba894828b82d1e99a1adf97f" />
+      </list>
+    </option>
     <option name="projectCachePath" value="project-c9d13d1e-ca43-42ec-a874-22a4d84f1fde" />
   </component>
 </project>

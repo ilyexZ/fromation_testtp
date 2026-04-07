@@ -1,0 +1,20 @@
+type Query {
+    allFacultesWithFormations: [FaculteDetail]
+}
+
+type FaculteDetail {
+    id: ID
+    nom: String
+    domaine: String
+    formations: [FormationDetail]
+}
+
+type FormationDetail {
+    intitule: String
+    modules: [ModuleDetail]
+}
+
+type ModuleDetail {
+    titre: String
+    nomEnseignant: String
+}

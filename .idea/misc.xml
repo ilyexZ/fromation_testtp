@@ -6,10 +6,13 @@
       <list>
         <option value="$PROJECT_DIR$/ms-universite/pom.xml" />
         <option value="$PROJECT_DIR$/ms-formation/pom.xml" />
+        <option value="$PROJECT_DIR$/ms-registry/pom.xml" />
+        <option value="$PROJECT_DIR$/ms-registry/ms-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/ms-gateway/pom.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2">
+  <component name="ProjectRootManager" version="2" project-jdk-name="25" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

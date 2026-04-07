@@ -1,0 +1,37 @@
+server:
+  port: 7777
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: TRACE
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8888/eureka
+
+spring:
+  application:
+    name: ms-gateway
+  cloud:
+    gateway:
+      mvc:                          # ← CHANGE THIS (was webflux)
+        routes:
+          - id: universite-route
+            predicates:
+              - Path=/cloud/universite/**
+            filters:
+              - RewritePath=/cloud/universite/(?<s>.*), /${s}
+            uri: lb://ms-universite
+
+          - id: formation-route
+            predicates:
+              - Path=/cloud/formation/**
+            filters:
+              - RewritePath=/cloud/formation/(?<s>.*), /${s}
+            uri: lb://ms-formation

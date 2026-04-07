@@ -1,4 +1,5 @@
-package com.esi.msuniversite.Entities;
+package com.esi.msformation.Entities;
+
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,16 +10,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Faculte {
+public class Modul {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nom;
-    private String domaine;
-
+    private String titre;
+    private int volume;
 
     @ManyToOne
-    private Universite universite;
+    private Formation formation;
 
-    private Long doyenId;
+    @ManyToOne
+    private Enseignant Enseignants;
 }
